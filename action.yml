@@ -1,0 +1,32 @@
+# action.yml
+name: 'CodeCaster Github Action'
+description: 'Send repository to create README by CodeCaster'
+author: 'not int must be str'
+inputs:
+  github-token:
+    description: 'Put secrets.GITHUB_TOKEN or other tokens to access by CodeCaster'
+    required: true
+  code-caster-endpoint:
+    description: 'endpoint to generate content'
+    required: false
+    default: 'https://code-caster.nihiyama.net/gen'
+  gen-type:
+    description: 'Select generation type (deafult: readme)'
+    required: false
+    default: 'readme'
+  target-revision:
+    description: 'Set revision to create content by CodeCaster'
+    required: false:
+    default: ${{ github.sha }}
+runs:
+  using: 'composite'
+  steps:
+    - name: 
+      shell: bash
+      run: |
+        git archive --format=zip --output=source.zip ${{ inputs.target-revision }}
+        curl -X POST ${{ inputs.code-caster-endpoint }}/${{ inputs.gen-type }} \
+          -H "Authotization: Bearer ${CODE_CASTER_REPO_TOKEN}" \
+          -F "source=source.zip"
+  env:
+    CODE_CASTER_REPO_TOKEN: xxx
