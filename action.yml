@@ -28,5 +28,3 @@ runs:
         curl -X POST ${{ inputs.code-caster-endpoint }}/${{ inputs.gen-type }} \
           -H "Authotization: Bearer ${CODE_CASTER_REPO_TOKEN}" \
           -F "source=source.zip"
-  env:
-    CODE_CASTER_REPO_TOKEN: xxx
