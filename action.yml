@@ -16,7 +16,7 @@ inputs:
     default: 'readme'
   target-revision:
     description: 'Set revision to create content by CodeCaster'
-    required: false:
+    required: false
     default: ${{ github.sha }}
 runs:
   using: 'composite'
