@@ -47,7 +47,7 @@ runs:
           http_status="${response: -3}"
           if [ "${http_status}" -eq 200 ]; then
             break
-          elif [ "${http_status}" -eq 102 ]; then
+          elif [ "${http_status}" -eq 204 ]; then
             echo "Be generating content"
             continue
           else
