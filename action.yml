@@ -45,14 +45,15 @@ runs:
             ${{ inputs.code-caster-endpoint }}/${{ inputs.gen-type }}/${CODE_CASTER_CONTENT_TOKEN} \
             -H "Authorization: ${CODE_CASTER_REPO_TOKEN}")
           http_status="${response: -3}"
-          if [ "$http_status" -eq 200 ]; then
+          if [ "${http_status}" -eq 200 ]; then
             break
-          elif [ "$http_status" -eq 102 ]; then
-            echo "Be generating content "
+          elif [ "${http_status}" -eq 102 ]; then
+            echo "Be generating content"
             continue
           else
             echo "Not found content"
             exit 1
           fi
           sleep 3
+        done
         cat code-caster-readme.md
