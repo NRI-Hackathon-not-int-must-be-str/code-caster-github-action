@@ -43,7 +43,7 @@ runs:
         while true; do
           response=$(curl -X POST -s  -w "%{http_code}" -o "code-caster-readme.md" \
             ${{ inputs.code-caster-endpoint }}/${{ inputs.gen-type }}/${CODE_CASTER_CONTENT_TOKEN} \
-            -H "Authotization: Bearer ${CODE_CASTER_REPO_TOKEN}" \
+            -H "Authorization: ${CODE_CASTER_REPO_TOKEN}")
           http_status="${response: -3}"
           if [ "$http_status" -eq 200 ]; then
             break
