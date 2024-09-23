@@ -35,7 +35,7 @@ runs:
           -H 'accept: application/json' \
           -H 'Content-Type: multipart/form-data' \
           -F "source=@source.zip;type=application/zip" \
-          | jq '.token')
+          | jq --raw-output '.token')
         echo "CODE_CASTER_CONTENT_TOKEN=${response}" >> $GITHUB_ENV
     - name: Download and git push
       shell: bash
