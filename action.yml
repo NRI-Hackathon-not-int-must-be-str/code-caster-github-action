@@ -36,6 +36,7 @@ runs:
           | jq '.token')
         echo 'CODE_CASTER_CONTENT_TOKEN=${response}' >> $GITHUB_ENV
     - name: Download and git push
+      shell: bash
       run: |
         while true; do
           response=$(curl -X POST -s  -w "%{http_code}" -o "code-caster-readme.md" \
