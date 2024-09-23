@@ -70,4 +70,4 @@ runs:
 
         git push origin "${branch_name}"
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ inputs.github-token }}
