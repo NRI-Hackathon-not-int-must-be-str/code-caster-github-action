@@ -49,11 +49,11 @@ runs:
             break
           elif [ "${http_status}" -eq 204 ]; then
             echo "Be generating content"
+            sleep 3
             continue
           else
             echo "Not found content"
             exit 1
           fi
-          sleep 3
         done
         cat code-caster-readme.md
