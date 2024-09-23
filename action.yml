@@ -58,6 +58,7 @@ runs:
         done
         cat code-caster-readme.md
   - name: Commit and push code-caster-readme.md to the same branch
+    shell: bash
     run: |
       git config --global user.name "github-actions[bot]"
       git config --global user.email "github-actions[bot]@users.noreply.github.com"
