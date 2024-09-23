@@ -21,10 +21,35 @@ inputs:
 runs:
   using: 'composite'
   steps:
-    - name: 
+    - name: Install jq
+      shell: bash
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y jq
+    - name: Upload source and generate content
       shell: bash
       run: |
         git archive --format=zip --output=source.zip ${{ inputs.target-revision }}
-        curl -X POST ${{ inputs.code-caster-endpoint }}/${{ inputs.gen-type }} \
+        response=$(curl -X POST -s ${{ inputs.code-caster-endpoint }}/${{ inputs.gen-type }}/ \
           -H "Authotization: Bearer ${CODE_CASTER_REPO_TOKEN}" \
-          -F "source=source.zip"
+          -F "source=source.zip" \
+          | jq '.token')
+        echo 'CODE_CASTER_CONTENT_TOKEN=${response}' >> $GITHUB_ENV
+    - name: Download and git push
+      run: |
+        while true; do
+          response=$(curl -X POST -s  -w "%{http_code}" -o "code-caster-readme.md" \
+            ${{ inputs.code-caster-endpoint }}/${{ inputs.gen-type }}/${CODE_CASTER_CONTENT_TOKEN} \
+            -H "Authotization: Bearer ${CODE_CASTER_REPO_TOKEN}" \
+          http_status="${response: -3}"
+          if [ "$http_status" -eq 200 ]; then
+            break
+          elif [ "$http_status" -eq 102 ]; then
+            echo "Be generating content "
+            continue
+          else
+            echo "Not found content"
+            exit 1
+          fi
+          sleep 3
+        cat code-caster-readme.md
