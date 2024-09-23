@@ -34,7 +34,7 @@ runs:
           -H "Authotization: ${CODE_CASTER_REPO_TOKEN}" \
           -F "source=source.zip" \
           | jq '.token')
-        echo 'CODE_CASTER_CONTENT_TOKEN=${response}' >> $GITHUB_ENV
+        echo "CODE_CASTER_CONTENT_TOKEN=${response}" >> $GITHUB_ENV
     - name: Download and git push
       shell: bash
       run: |
