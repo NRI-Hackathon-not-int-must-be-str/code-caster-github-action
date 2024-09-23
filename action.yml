@@ -57,3 +57,16 @@ runs:
           fi
         done
         cat code-caster-readme.md
+  - name: Commit and push code-caster-readme.md to the same branch
+    run: |
+      git config --global user.name "github-actions[bot]"
+      git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+      branch_name=$(echo "${GITHUB_REF#refs/heads/}")
+
+      git add code-caster-readme.md
+      git commit -m "Update code-caster-readme.md from CodeCaster"
+
+      git push origin "${branch_name}"
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
