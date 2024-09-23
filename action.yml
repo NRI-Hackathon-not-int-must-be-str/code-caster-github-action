@@ -31,7 +31,7 @@ runs:
       run: |
         git archive --format=zip --output=source.zip ${{ inputs.target-revision }}
         response=$(curl -X POST -s ${{ inputs.code-caster-endpoint }}/${{ inputs.gen-type }}/ \
-          -H "Authotization: Bearer ${CODE_CASTER_REPO_TOKEN}" \
+          -H "Authotization: ${CODE_CASTER_REPO_TOKEN}" \
           -F "source=source.zip" \
           | jq '.token')
         echo 'CODE_CASTER_CONTENT_TOKEN=${response}' >> $GITHUB_ENV
