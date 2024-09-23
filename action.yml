@@ -32,7 +32,9 @@ runs:
         git archive --format=zip --output=source.zip ${{ inputs.target-revision }}
         response=$(curl -X POST -s ${{ inputs.code-caster-endpoint }}/${{ inputs.gen-type }}/ \
           -H "Authorization: ${CODE_CASTER_REPO_TOKEN}" \
-          -F "source=source.zip" \
+          -H 'accept: application/json' \
+          -H 'Content-Type: multipart/form-data' \
+          -F "source=@source.zip;type=application/zip" \
           | jq '.token')
         echo "CODE_CASTER_CONTENT_TOKEN=${response}" >> $GITHUB_ENV
     - name: Download and git push
